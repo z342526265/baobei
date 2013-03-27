@@ -1,0 +1,38 @@
+
+<div id="list_left_title">
+  <img src="{dede:global.cfg_templets_skin/}/img/left_case.jpg" tppabs="{dede:global.cfg_templets_skin/}/img/left_case.jpg" />
+</div>
+<div id="list_left_content">
+  <div id="slides1">
+    <div class="slides1_container" id="left_pics">
+      {dede:arclist row='5'}
+      <div>
+        <a href="[field:arcurl/]" tppabs="[field:arcurl/]" title="[field:title/]" target="_blank">
+          <img src="[field:litpic/]" tppabs="[field:litpic/]" alt="[field:title/]" width="195" height="195"/>
+        </a>
+      </div>
+      {/dede:arclist}
+    </div>
+    <div class="prev"><a onclick="pre_qihuan();" href="javascript:" id="left_pre" class="prev"></a></div>
+    <div class="next"><a onclick="next_qihuan();" href="javascript:" id="left_next" class="next"></a></div>
+    <script>
+//      $(document).ready(function(){
+//        //图片切换的js
+//        $("#left_pre").click(function(){
+//          alert("kkk!");
+//        })
+//      });
+
+    </script>
+  </div>
+</div>
+<div id="list_left_title">
+  <img src="{dede:global.cfg_templets_skin/}/img/left_news.jpg" tppabs="{dede:global.cfg_templets_skin/}/img/left_news.jpg" />
+</div>
+<div id="list_left_content_news">
+  <ul>
+    {dede:arclist typeid='3' row='9' }
+    <li><i>[field:ID/]</i><span> [field:textlink/]</span></li>
+    {/dede:arclist}
+  </ul>
+</div>

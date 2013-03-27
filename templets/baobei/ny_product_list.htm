@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  {dede:include filename="ny_head.htm"/}
+  <body class="index">
+    {dede:include filename="ny_toper.htm"/}
+    {dede:include filename="ny_main_menu.htm"/}
+    <div style="clear:both"></div>
+    <div id="w1680">
+      <div id="w944">
+        <div id="location">
+          <strong>当前位置:</strong> {dede:field name='position'/}
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="w944">
+        <div id="list">
+          <div id="list_left">
+            <div id="list_left_title"><img src="{dede:global.cfg_templets_skin/}/img/case_title.jpg" tppabs="" /></div>
+            <div id="list_left_nva">
+              <ul>
+                {dede:channel type='son' typeid='2'}
+                <li>
+                <a href='[field:typeurl/]' [field:rel/]>[field:typename/]</a>
+                </li>
+                {/dede:channel}
+              </ul>
+            </div>
+            {dede:include filename="ny_left_content.htm"/}
+          </div>
+          <div id="list_right">
+            <div id="list_right_title">
+              <img src="{dede:global.cfg_templets_skin/}/img/case_title_1.jpg"/>
+            </div>
+            <div class="article_case_1">
+              <img src="{dede:field.litpic/}" tppabs="" alt="{dede:field.title/}" />
+              <h3>
+                {dede:field.title/}
+              </h3>
+              <span>
+                POST TIME:{dede:field.pubdate function=MyDate('Y-m-d',@me)/}
+              </span>
+              <i></i>
+            </div>
+<!--
+
+            <div id="custom_popup">
+
+              <p>
+<a class="group4" href="javascript:" title="图片">
+图片
+</a>
+
+<a class="group4" href="http://static.oschina.net/uploads/space/2012/0607/142131_2PqS_28.jpg" title="图片">lllll</a>
+</p>
+            </div>
+-->
+            <div class="article_case">
+              <ul>
+                {dede:field name='imgurls' alt='图片输出区'}
+                <li>
+                <a href="[field:imgsrc/]" class="group4">
+                  <img src='[field:imgsrc/]' alt="[field:alttext/]"/>
+                </a>
+                </li>
+                {/dede:field}
+              </ul>
+            </ul>
+          </div>
+          <div id="pages_content">
+            <div id="pages_content_left">
+              <span>{dede:prenext get='pre'/}</span>
+            </div>
+            <div id="pages_content_right">
+              <span>{dede:prenext get='next'/}</span>                    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+    {dede:include filename="ny_footer.htm"/}
+  </div>
+</body>
+</html>
+

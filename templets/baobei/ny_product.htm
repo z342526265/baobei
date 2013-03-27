@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  {dede:include filename="ny_head.htm"/}
+  <body class="index">
+<script>
+//function multi(pagenum,tagid)
+//{
+//var taget_obj = document.getElementById(tagid);
+//var taget_obj_page = document.getElementById("page_"+tagid);
+//myajax = new DedeAjax(taget_obj,false,false,'','','');
+//myajax.SendGet2("/plus/arcmulti.php?mtype=0&pnum="+pagenum+'&tagid='+tagid);
+//myajax = new DedeAjax(taget_obj_page,false,false,'','','');
+//myajax.SendGet2("/plus/arcmulti.php?mtype=1&pnum="+pagenum+'&tagid='+tagid);
+//DedeXHTTP = null;
+//}
+</script>
+    {dede:include filename="ny_toper.htm"/}
+    {dede:include filename="ny_main_menu.htm"/}
+    <div style="clear:both"></div>
+    <div id="w1680">
+      <div id="w944">
+        <div id="location">
+          <strong>当前位置:</strong>{dede:field name='position'/}
+          <!--
+          您的位置：
+          <a href="../index.htm" tppabs="http://www.lymonalisa.com/">主页</a>
+          》
+          <a href="index.htm" tppabs="http://www.lymonalisa.com/lizhixiezhen/">作品欣赏</a>
+          》南阳婚纱摄影
+          -->
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="w944">
+        <div id="list">
+          <div id="list_left">
+            <div id="list_left_title">
+              <img src="{dede:global.cfg_templets_skin/}/img/case_title.jpg" tppabs="{dede:global.cfg_templets_skin/}/img/case_title.jpg" />
+            </div>
+            <div id="list_left_nva">
+            </div>
+            {dede:include filename="ny_left_content.htm"/}
+          </div>
+          <div id="list_right">
+            <div id="list_right_title">
+              <img src="{dede:global.cfg_templets_skin/}/img/case_title_1.jpg" tppabs="{dede:global.cfg_templets_skin/}/img/case_title_1.jpg" />
+            </div>
+            <div id="case_content">
+              <ul>
+                {dede:list pagesize='6'}
+                <li>
+                <a href="[field:arcurl/]" tppabs="[field:arcurl/]" title="[field:title/]" target="_blank">
+                  <img src="[field:litpic/]" tppabs="[field:litpic/]" alt="[field:title/]" width="155" height="155"/>
+                  <span><b>[field:title/]</b></span>
+                  <i>[field:pubdate function=MyDate('Y-m-d',@me)/]</i>
+                </a>
+                </li>
+                {/dede:list}
+              </ul>
+            </div>
+            <div id="pages_content">
+              <div class="page">
+                {dede:pagelist listitem="info,index,end,pre,next,pageno" listsize="5"/}
+                <!--
+                                  <ul>
+                                    <li class="thisclass">1</li>
+                                  </ul>
+                                  -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+    {dede:include filename="ny_footer.htm"/}
+    <!-- /footer -->
+  </body>
+</html>

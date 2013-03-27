@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*附加样式开始*/
+*{ margin:0 auto; padding:0;}
+body{background-color:#fff;  font-family:"Arial","Tahoma","微软雅黑","雅黑"; font:12px/1.5; font-size:12px; line-height:20px; text-align:left; }
+a{display:block;float:left; color:#000000; }
+ul,ol,li {list-style:none; }
+a {outline: none;}
+a:link { text-decoration: none;} /* 未访问的链接 */
+a:visited {text-decoration:none;} /* 已访问的链接 */
+a:hover { text-decoration:none;} /* 鼠标在链接上 */
+a:active {text-decoration:none;} /* 激活链接 */
+img{border:0;}
+.clear{ clear:both;}
+/*附加样式开始*/
+
+
+.n_center{ width:960px;}
+.n_lefter{ width:258px; float:left; background:url(n_lefter_bg.gif) repeat-y;}
+.n_lefter_title{height:50px; width:258px; background:url(activity_left.jpg) no-repeat;}
+.n_lefter_center{ background:url(n_lefter_center.gif) repeat-y;}
+.n_lefter_center ul{}
+.n_lefter_center ul li{ background:url(n_lefter_center_li.gif) no-repeat; height:46px; width:258px; line-height:46px; padding-left:50px;}
+
+.n_lefter_title2{height:50px; width:258px; background:url(case_title.jpg) no-repeat;}
+.n_lefter_center2{ background:url(n_lefter_center.gif) repeat-y;}
+.n_lefter_center2 ul{}
+.n_lefter_center2 ul li{ background:url(n_lefter_center_li1.gif) no-repeat; height:40px; width:258px; line-height:40px; padding-left:60px;}
+
+.n_lefter_title1{height:50px; width:258px; background:url(case_title.jpg) no-repeat;}
+.n_lefter_center1{ background:url(n_lefter_center.gif) repeat-y;}
+.n_lefter_center1 ul{}
+.n_lefter_center1 ul li{ background:url(n_lefter_center_li1.gif) no-repeat; height:40px; width:258px; line-height:40px; padding-left:60px;}
+.n_righter{ width:700px; float:left;}
+.n_righter_title{ background:url(activity_title.jpg) no-repeat; height:57px; width:688px;}

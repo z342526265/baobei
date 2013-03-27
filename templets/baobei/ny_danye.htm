@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  {dede:include filename="ny_head.htm"/}
+      <body class="index">
+        {dede:include filename="ny_toper.htm"/}
+        {dede:include filename="ny_main_menu.htm"/}
+        <div style="clear:both"></div>
+
+        <div id="w1680">
+          <div id="w944"><div id="location">您的位置：<a href="/" tppabs="http://www../">漂亮宝贝</a> > <a href="/plus/list.php?tid=1" tppabs="/plus/list.php?tid=1">关于我们</a></div></div>
+          <div class="clear"></div>
+          <div id="w944">
+            <div id="list">
+              <div id="list_left">
+                <div id="list_left_title"><img src="{dede:global.cfg_templets_skin/}/img/about_left.jpg" tppabs="http://www../{dede:global.cfg_templets_skin/}/img/about_left.jpg" /></div>
+                <div id="list_left_nva">
+                  <ul>
+                    <li><a href="/plus/list.php?tid=1" tppabs="http://www../about_us.html" title="关于我们">关于我们</a></li>
+                    <li><a href="/plus/list.php?tid=5" tppabs="http://www../contact_us.html" title="联系我们">联系我们</a></li>
+                  </ul>
+                </div>
+                {dede:include filename="ny_left_content.htm"/}
+              </div>
+              <div id="list_right">
+                <div id="list_right_title"><img src="{dede:global.cfg_templets_skin/}/img/about_title.jpg" tppabs="http://www../{dede:global.cfg_templets_skin/}/img/about_title.jpg" /></div>
+                <div class="article_article">
+                  {dede:field.content/}
+
+                </div>
+              </div>
+              <!--关于我们-->
+            </div>
+          </div>
+        </div>
+        <div class="clear"></div>
+        {dede:include filename="footer.htm"/}
+        <!-- /footer -->
+      </body>
+    </html>

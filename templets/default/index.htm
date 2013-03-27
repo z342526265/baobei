@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={dede:global.cfg_soft_lang/}" />
+<title>{dede:global.cfg_webname/}</title>
+<meta name="description" content="{dede:global.cfg_description/}" />
+<meta name="keywords" content="{dede:global.cfg_keywords/}" />
+<link href="{dede:global.cfg_templets_skin/}/img/style.css"rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/dedecms.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/img/index.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_cmsurl/}/include/dedeajax2.js"></script>
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_cmspath/}/images/js/j.js" ></script>
+<script language="javascript" type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/pic_scroll.js"></script>
+<script src="{dede:global.cfg_templets_skin/}/js/jquery.tools.min.js" type="text/javascript"></script>
+<script src="{dede:global.cfg_templets_skin/}/js/moumou.js"></script>
+<script src="{dede:global.cfg_templets_skin/}/js/slides.min.jquery.js" ></script>
+<script type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/scrolltopcontrol.js" ></script>
+<script type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/mootools-yui-compressed.js" ></script>
+<script type="text/javascript" src="{dede:global.cfg_templets_skin/}/js/sexylightbox.v2.3.mootools.min.js" ></script>
+<link rel="stylesheet" href="templets/default/img/sexylightbox.css"  type="text/css" media="all" />
+<script language="javascript" type="text/javascript">
+<!--
+	$(function(){
+		$("a[_for]").mouseover(function(){
+			$(this).parents().children("a[_for]").removeClass("thisclass").parents().children("dd").hide();
+			$(this).addClass("thisclass").blur();
+			$("#"+$(this).attr("_for")).show();
+		});
+		$("a[_for=uc_member]").mouseover();
+		$("a[_for=flink_1]").mouseover();
+	});
+	
+	function CheckLogin(){
+	  var taget_obj = document.getElementById('_userlogin');
+	  myajax = new DedeAjax(taget_obj,false,false,'','','');
+	  myajax.SendGet2("{dede:global.cfg_cmspath/}/member/ajax_loginsta.php");
+	  DedeXHTTP = null;
+	}
+-->
+</script>
+
+
+
+<script language="JavaScript">
+<!-- Author By Luchr
+function killErrors()
+{
+return true;
+}
+window.onerror = killErrors;
+// -->
+</script>
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+      SexyLightbox = new SexyLightBox({color:'blanco', dir: '/templets/default/sexyimages'});
+    });
+</script>
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: 'http://www.lymonalisa.com/templets/default/mnls_images/loading.gif',
+				play: 5000,
+				pause: 2500,
+				generatePagination: false,
+				animationStart: function(){
+					$('.caption').animate({
+						bottom:-35
+					},100);
+				},
+				animationComplete: function(current){
+					$('.caption').animate({
+						bottom:0
+					},200);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log(current);
+					};
+				}
+			});
+			
+			
+		});
+</script>
+
+
+<script type="text/javascript">
+var $ = function (id) {
+    return "string" == typeof id ? document.getElementById(id) : id;
+};
+
+var Class = {
+  create: function() {
+    return function() {
+      this.initialize.apply(this, arguments);
+    }
+  }
+}
+
+Object.extend = function(destination, source) {
+    for (var property in source) {
+        destination[property] = source[property];
+    }
+    return destination;
+}
+
+function addEventHandler(oTarget, sEventType, fnHandler) {
+    if (oTarget.addEventListener) {
+        oTarget.addEventListener(sEventType, fnHandler, false);
+    } else if (oTarget.attachEvent) {
+        oTarget.attachEvent("on" + sEventType, fnHandler);
+    } else {
+        oTarget["on" + sEventType] = fnHandler;
+    }
+};
+
+
+var Scroller = Class.create();
+Scroller.prototype = {
+  initialize: function(idScroller, idScrollMid, options) {
+    var oScroll = this, oScroller = $(idScroller), oScrollMid = $(idScrollMid);
+   
+    this.heightScroller = oScroller.offsetHeight;
+    this.heightList = oScrollMid.offsetHeight;
+   
+    if(this.heightList <= this.heightScroller) return;
+   
+    oScroller.style.overflow = "hidden";
+    oScrollMid.appendChild(oScrollMid.cloneNode(true));
+   
+    this.oScroller = oScroller;   
+    this.timer = null;
+   
+    this.SetOptions(options);
+   
+    this.side = 1;//1是上 -1是下
+    switch (this.options.Side) {
+        case "down" :
+            this.side = -1;
+            break;
+        case "up" :
+        default :
+            this.side = 1;
+    }
+   
+    addEventHandler(oScrollMid , "mouseover", function() { oScroll.Stop(); });
+    addEventHandler(oScrollMid , "mouseout", function() { oScroll.Start(); });
+   
+    if(this.options.PauseStep <= 0 || this.options.PauseHeight <= 0) this.options.PauseStep = this.options.PauseHeight = 0;
+    this.Pause = 0;
+   
+    this.Start();
+  },
+  //设置默认属性
+  SetOptions: function(options) {
+    this.options = {//默认值
+      Step:            1,//每次变化的px量
+      Time:            20,//速度(越大越慢)
+      Side:            "up",//滚动方向:"up"是上，"down"是下
+      PauseHeight:    0,//隔多高停一次
+      PauseStep:    1000//停顿时间(PauseHeight大于0该参数才有效)
+    };
+    Object.extend(this.options, options || {});
+  },
+  //滚动
+  Scroll: function() {
+    var iScroll = this.oScroller.scrollTop, iHeight = this.heightList, time = this.options.Time, oScroll = this, iStep = this.options.Step * this.side;
+   
+    if(this.side > 0){
+        if(iScroll >= (iHeight * 2 - this.heightScroller)){ iScroll -= iHeight; }
+    } else {
+        if(iScroll <= 0){ iScroll += iHeight; }
+    }
+   
+    if(this.options.PauseHeight > 0){
+        if(this.Pause >= this.options.PauseHeight){
+            time = this.options.PauseStep;
+            this.Pause = 0;
+        } else {
+            this.Pause += Math.abs(iStep);
+            this.oScroller.scrollTop = iScroll + iStep;
+        }
+    } else { this.oScroller.scrollTop = iScroll + iStep; }
+   
+    this.timer = window.setTimeout(function(){ oScroll.Scroll(); }, time);
+  },
+  //开始
+  Start: function() {
+    this.Scroll();
+  },
+  //停止
+  Stop: function() {
+    clearTimeout(this.timer);
+  }
+};
+
+window.onload = function(){
+    new Scroller("idScroller", "idScrollMid",{ PauseHeight:37 });
+}
+</script><!--新闻标题向上滚动JS结束-->
+
+
+        <script>
+            $(document).ready(function() {
+            $(".sc1 .sc2").scrollable({size:1,items:".sc1 .sc2 ul",circular:true,prev:".sk1",next:".sk2"}).autoscroll({ autoplay: true,interval:4000 });
+            });
+            </script>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="http://www.lymonalisa.com/templets/default/js/PNG.js"></script>
+    <script>
+        PNG.fix('.png');
+    </script>
+<![endif]-->
+</head>
+<body class="index">
+{dede:include filename="head.htm"/}
+<div style="clear:both"></div>
+<!-- /header -->
+<div class="center">
+<div class="huodong">
+           <div class="huodong_title"></div>
+           <div class="huodong_tb1"></div>
+           <div class="huodong_center"></div>
+           <div class="huodong_anniu"></div>
+     </div>
+     <div class="huodongnr">
+           <div class="huodongnr_title"></div>
+           <div class="huodongnr_tb1"></div>
+           <div class="huodongnr_center">
+               <ul>
+               {dede:arclist  typeid='6'  row='4' titlelen='24' orderby='pubdate' idlist='' col='2'}
+                <li>[field:textlink/]</li>
+               {/dede:arclist}
+               </ul>
+           </div>
+           <div class="huodongnr_anniu"></div>
+     </div>
+     <div class="news1">
+          <div class="news1_title"></div>
+          <div id="idScroller">
+          <div id="idScrollMid" class="news_center">
+               {dede:arclist typeid='3'  row='10' titlelen='24' orderby='pubdate' idlist='' col='2'}
+               <ul>
+                <li>[field:textlink/]<span style=" float:right; margin-right:60px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+               </ul>
+              {/dede:arclist}
+               <div style="clear:both"></div>
+          </div>
+          </div>
+          <div class="news1_anniu"></div>
+          <div class="news1_db"></div>
+     </div>
+</div>
+
+
+    <div class="clear"></div>
+    <div id="ad"><img alt="" src="{dede:global.cfg_templets_skin/}/img/tiao1.gif"  /></div>
+    <div class="clear"></div>
+    <div id="dh_2">
+</div>
+    <div id="w944">
+    	<div id="case">
+            <span>
+                <div class="sc1">
+                    <a class="sk1" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add1.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add1.png" alt="上一张"></a>
+                    <a class="sk2" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add2.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add2.png" alt="下一张"></a>
+                    <div class="sc2">
+                        <ul style="left: -462px;">
+                        	<li><a href="gaoduan/1662.html" tppabs="http://www.lymonalisa.com/gaoduan/1662.html" title="洛丽塔庄园" target="_blank"><img src="uploads/allimg/130123/1-1301231000440-L.jpg" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="gaoduan/1218.html" tppabs="http://www.lymonalisa.com/gaoduan/1218.html" title="高端摄影会所--顶级皇" target="_blank"><img src="uploads/120922/1-1209221HU5361.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="gaoduan/1217.html" tppabs="http://www.lymonalisa.com/gaoduan/1217.html" title="高端摄影会所--皇室" target="_blank"><img src="uploads/120922/1-1209221HS0301.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="neijing/854.html" tppabs="http://www.lymonalisa.com/neijing/854.html" title="伊莎贝拉二期" target="_blank"><img src="uploads/allimg/120530/1-120530152K50-L.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="gaoduan/604.html" tppabs="http://www.lymonalisa.com/gaoduan/604.html" title="伊莎贝拉实景会馆" target="_blank"><img src="uploads/120309/1-1203091A12C60.jpg" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="gaoduan/495.html" tppabs="http://www.lymonalisa.com/gaoduan/495.html" title="洛可可实景会馆" target="_blank"><img src="uploads/allimg/120125/1-1201251353160-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/120125/1-1201251353160-L.jpg" alt="洛可可实景会馆" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="neijing/493.html" tppabs="http://www.lymonalisa.com/neijing/493.html" title="新桥恋人" target="_blank"><img src="uploads/allimg/120125/1-1201251343450-L.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="zuopinzhanshi/1261.html" tppabs="http://www.lymonalisa.com/zuopinzhanshi/1261.html" title="秋天里的童话" target="_blank"><img src="uploads/allimg/120926/1-1209261032250-L.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="waijing/1242.html" tppabs="http://www.lymonalisa.com/waijing/1242.html" title="隋唐遗址外景" target="_blank"><img src="uploads/allimg/120923/1-1209231FK50-L.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="waijing/1241.html" tppabs="http://www.lymonalisa.com/waijing/1241.html" title="沙滩浴场" target="_blank"><img src="uploads/allimg/120923/1-120923164Z90-L.jpg"  width="334" height="221"><ins class="png"></ins></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            <script>
+            $(document).ready(function() {
+            $(".sc1 .sc2").scrollable({size:1,items:".sc1 .sc2 ul",circular:true,prev:".sk1",next:".sk2"}).autoscroll({ autoplay: true,interval:4000 });
+            });
+            </script>
+            </span>
+            <div class="case">
+                <ul>
+                    <li><a href="gaoduan/1662.html" tppabs="http://www.lymonalisa.com/gaoduan/1662.html" title="洛丽塔庄园" target="_blank"><img src="uploads/allimg/130123/1-1301231000440-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/130123/1-1301231000440-L.jpg" alt="洛丽塔庄园" /><h3>洛丽塔庄园</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2013-01-23</p><p>P</p></a></li>
+<li><a href="gaoduan/1218.html" tppabs="http://www.lymonalisa.com/gaoduan/1218.html" title="高端摄影会所--顶级皇" target="_blank"><img src="uploads/120922/1-1209221HU5361.jpg" tppabs="http://www.lymonalisa.com/uploads/120922/1-1209221HU5361.jpg" alt="高端摄影会所--顶级皇" /><h3>高端摄影会所--顶级皇</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>P</p></a></li>
+<li><a href="gaoduan/1217.html" tppabs="http://www.lymonalisa.com/gaoduan/1217.html" title="高端摄影会所--皇室" target="_blank"><img src="uploads/120922/1-1209221HS0301.jpg" tppabs="http://www.lymonalisa.com/uploads/120922/1-1209221HS0301.jpg" alt="高端摄影会所--皇室" /><h3>高端摄影会所--皇室</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>P</p></a></li>
+<li><a href="neijing/854.html" tppabs="http://www.lymonalisa.com/neijing/854.html" title="伊莎贝拉二期" target="_blank"><img src="uploads/allimg/120530/1-120530152K50-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/120530/1-120530152K50-L.jpg" alt="伊莎贝拉二期" /><h3>伊莎贝拉二期</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>P</p></a></li>
+<li><a href="gaoduan/604.html" tppabs="http://www.lymonalisa.com/gaoduan/604.html" title="伊莎贝拉实景会馆" target="_blank"><img src="uploads/120309/1-1203091A12C60.jpg" tppabs="http://www.lymonalisa.com/uploads/120309/1-1203091A12C60.jpg" alt="伊莎贝拉实景会馆" /><h3>伊莎贝拉实景会馆</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>P</p></a></li>
+<li><a href="gaoduan/495.html" tppabs="http://www.lymonalisa.com/gaoduan/495.html" title="洛可可实景会馆" target="_blank"><img src="uploads/allimg/120125/1-1201251353160-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/120125/1-1201251353160-L.jpg" alt="洛可可实景会馆" /><h3>洛可可实景会馆</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>16P</p></a></li>
+<li><a href="neijing/493.html" tppabs="http://www.lymonalisa.com/neijing/493.html" title="新桥恋人" target="_blank"><img src="uploads/allimg/120125/1-1201251343450-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/120125/1-1201251343450-L.jpg" alt="新桥恋人" /><h3>新桥恋人</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-11-30</p><p>9P</p></a></li>
+<li><a href="zuopinzhanshi/1261.html" tppabs="http://www.lymonalisa.com/zuopinzhanshi/1261.html" title="秋天里的童话" target="_blank"><img src="uploads/allimg/120926/1-1209261032250-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/120926/1-1209261032250-L.jpg" alt="秋天里的童话" /><h3>秋天里的童话</h3><i>漂亮宝贝 PHOTOGRAPHY</i><p>2012-09-26</p><p>P</p></a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="dh_7"><h2>&nbsp;</h2></div>
+    <div id="w944">
+    	<div id="case">
+            <span>
+                <div class="sc1">
+                    <a class="sk1" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add1.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add1.png" alt="上一张"></a>
+                    <a class="sk2" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add2.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add2.png" alt="下一张"></a>
+                    <div class="sc2">
+                        <ul style="left: -462px;">
+                        	<li><a href="lizhixiezhen/1488.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1488.html" title="KITTY-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G239340-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G239340-L.jpg" alt="KITTY-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1487.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1487.html" title="爱上满天星-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G236080-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G236080-L.jpg" alt="爱上满天星-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1486.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1486.html" title="低调奢华-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G231320-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G231320-L.jpg" alt="低调奢华-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1484.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1484.html" title="洛丽塔-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G223380-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G223380-L.jpg" alt="洛丽塔-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1485.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1485.html" title="恋上你的床-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G226480-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G226480-L.jpg" alt="恋上你的床-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1483.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1483.html" title="美丽心情-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G213350-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G213350-L.jpg" alt="美丽心情-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1482.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1482.html" title="魅惑—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G152250-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G152250-L.jpg" alt="魅惑—星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1481.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1481.html" title="时尚Style—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G143400-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G143400-L.jpg" alt="时尚Style—星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1480.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1480.html" title="英伦风-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G131120-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G131120-L.jpg" alt="英伦风-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1479.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1479.html" title="韩调-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G125550-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G125550-L.jpg" alt="韩调-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            <script>
+            $(document).ready(function() {
+            $(".sc1 .sc2").scrollable({size:1,items:".sc1 .sc2 ul",circular:true,prev:".sk1",next:".sk2"}).autoscroll({ autoplay: true,interval:4000 });
+            });
+            </script>
+            </span>
+            <div class="case">
+                <ul>
+                    <li><a href="lizhixiezhen/1488.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1488.html" title="KITTY-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G239340-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G239340-L.jpg" alt="KITTY-星工场" /><h3>KITTY-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1487.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1487.html" title="爱上满天星-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G236080-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G236080-L.jpg" alt="爱上满天星-星工场" /><h3>爱上满天星-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1486.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1486.html" title="低调奢华-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G231320-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G231320-L.jpg" alt="低调奢华-星工场" /><h3>低调奢华-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1484.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1484.html" title="洛丽塔-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G223380-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G223380-L.jpg" alt="洛丽塔-星工场" /><h3>洛丽塔-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1485.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1485.html" title="恋上你的床-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G226480-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G226480-L.jpg" alt="恋上你的床-星工场" /><h3>恋上你的床-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1483.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1483.html" title="美丽心情-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G213350-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G213350-L.jpg" alt="美丽心情-星工场" /><h3>美丽心情-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1482.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1482.html" title="魅惑—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G152250-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G152250-L.jpg" alt="魅惑—星工场" /><h3>魅惑—星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1481.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1481.html" title="时尚Style—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G143400-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G143400-L.jpg" alt="时尚Style—星工场" /><h3>时尚Style—星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>    
+
+<div id="dh_4"><a href="kerenzuopin/index.htm" tppabs="http://www.lymonalisa.com/kerenzuopin/"></a></div>
+    <div id="w944">
+    	<div id="case">
+            <span>
+                <div class="sc1">
+                    <a class="sk1" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add1.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add1.png" alt="上一张"></a>
+                    <a class="sk2" href="#"><img class="png" src="{dede:global.cfg_templets_skin/}/img/add2.png" tppabs="http://www.lymonalisa.com/templets/default/mnls_images/add2.png" alt="下一张"></a>
+                    <div class="sc2">
+                        <ul style="left: -462px;">
+                        	<li><a href="lizhixiezhen/1488.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1488.html" title="KITTY-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G239340-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G239340-L.jpg" alt="KITTY-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1487.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1487.html" title="爱上满天星-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G236080-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G236080-L.jpg" alt="爱上满天星-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1486.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1486.html" title="低调奢华-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G231320-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G231320-L.jpg" alt="低调奢华-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1484.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1484.html" title="洛丽塔-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G223380-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G223380-L.jpg" alt="洛丽塔-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1485.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1485.html" title="恋上你的床-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G226480-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G226480-L.jpg" alt="恋上你的床-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1483.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1483.html" title="美丽心情-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G213350-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G213350-L.jpg" alt="美丽心情-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1482.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1482.html" title="魅惑—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G152250-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G152250-L.jpg" alt="魅惑—星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1481.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1481.html" title="时尚Style—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G143400-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G143400-L.jpg" alt="时尚Style—星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1480.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1480.html" title="英伦风-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G131120-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G131120-L.jpg" alt="英伦风-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+<li><a href="lizhixiezhen/1479.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1479.html" title="韩调-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G125550-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G125550-L.jpg" alt="韩调-星工场" width="334" height="221"><ins class="png"></ins></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            <script>
+            $(document).ready(function() {
+            $(".sc1 .sc2").scrollable({size:1,items:".sc1 .sc2 ul",circular:true,prev:".sk1",next:".sk2"}).autoscroll({ autoplay: true,interval:4000 });
+            });
+            </script>
+            </span>
+            <div class="case">
+                <ul>
+                    <li><a href="lizhixiezhen/1488.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1488.html" title="KITTY-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G239340-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G239340-L.jpg" alt="KITTY-星工场" /><h3>KITTY-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1487.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1487.html" title="爱上满天星-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G236080-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G236080-L.jpg" alt="爱上满天星-星工场" /><h3>爱上满天星-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1486.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1486.html" title="低调奢华-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G231320-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G231320-L.jpg" alt="低调奢华-星工场" /><h3>低调奢华-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1484.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1484.html" title="洛丽塔-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G223380-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G223380-L.jpg" alt="洛丽塔-星工场" /><h3>洛丽塔-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1485.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1485.html" title="恋上你的床-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G226480-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G226480-L.jpg" alt="恋上你的床-星工场" /><h3>恋上你的床-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1483.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1483.html" title="美丽心情-星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G213350-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G213350-L.jpg" alt="美丽心情-星工场" /><h3>美丽心情-星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1482.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1482.html" title="魅惑—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G152250-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G152250-L.jpg" alt="魅惑—星工场" /><h3>魅惑—星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+<li><a href="lizhixiezhen/1481.html" tppabs="http://www.lymonalisa.com/lizhixiezhen/1481.html" title="时尚Style—星工场" target="_blank"><img src="uploads/allimg/121117/1-12111G143400-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121117/1-12111G143400-L.jpg" alt="时尚Style—星工场" /><h3>时尚Style—星工场</h3><i>MONA·LISA 南阳婚纱影楼</i><p>2012-11-17</p><p>张婚纱照</p></a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+<div class="clear"></div>
+<div id="dh_6"><h2><a href="tuanduizhanshi/index.htm" tppabs="http://www.lymonalisa.com/tuanduizhanshi/"></a></h2></div>
+    <div id="w944">
+    <div id="team">
+    <div class="rollBox">
+     <div class="Cont" id="ISL_Cont">
+      <div class="ScrCont">
+       <div id="List1">
+        <!-- 图片列表begin -->
+         <div class="pic">
+
+<img src="{dede:global.cfg_templets_skin/}/img/shishang.gif"/></div>
+<div class="pic">
+
+<img  src="{dede:global.cfg_templets_skin/}/img/huiyuan.gif"/></div>
+<div class="pic">
+
+<img src="{dede:global.cfg_templets_skin/}/img/vip.gif"/></div>
+
+<!--<a href="[field:redirecturl/]" title="[field:title/]" target="_blank"></a>-->
+        <!-- 图片列表end -->     
+       </div>
+       <div id="List2"></div>
+      </div>
+     </div>
+    </div>
+<script src="images/js/autoplayob.js" tppabs="http://www.lymonalisa.com/images/js/autoplayob.js"></script>  
+    </div>
+    </div>
+
+<div class="clear"></div>
+    <div id="dh_5"></div>
+
+    <div id="w944">
+    	<div id="jifen">
+             <div class="lifu"><img src="{dede:global.cfg_templets_skin/}/img/yunma.gif" /></div>
+             <div class="lifu"><img src="{dede:global.cfg_templets_skin/}/img/baobao.gif" /></div>
+             <div style="clear:both"></div>
+        </div>
+    </div>
+    
+   
+    
+    
+    
+        <div class="clear"></div>
+    <div id="dh_4"><a href="kerenzuopin/index.htm" tppabs="http://www.lymonalisa.com/kerenzuopin/"></a></div>
+    <div id="w944">
+    	<div id="keren_case">
+<div class="src2" id="chained3">
+		<div class="slideFrame_c"> 
+			<ul class="slideFrame_c_ele">
+				<li><a href="bbs/forum.php-mod=viewthread&tid=798.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1617" title="暖暖的" target="_blank"><img src="uploads/allimg/130102/1-1301021044130-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/130102/1-1301021044130-L.jpg" alt="暖暖的" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>暖暖的</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=789.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1559" title="追你、爱你" target="_blank"><img src="uploads/allimg/121214/1-1212140943150-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121214/1-1212140943150-L.jpg" alt="追你、爱你" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>追你、爱你</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=788.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1553" title="幸福夕阳" target="_blank"><img src="uploads/allimg/121211/1-1212111026320-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121211/1-1212111026320-L.jpg" alt="幸福夕阳" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>幸福夕阳</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=780.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1537" title="我们的爱" target="_blank"><img src="uploads/allimg/121202/1-1212021103390-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121202/1-1212021103390-L.jpg" alt="我们的爱" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>我们的爱</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=775.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1532" title="金秋不孤单" target="_blank"><img src="uploads/allimg/121129/1-1211291G0450-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121129/1-1211291G0450-L.jpg" alt="金秋不孤单" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>金秋不孤单</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=764.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1530" title="暖冬美景" target="_blank"><img src="uploads/allimg/121129/1-1211291121220-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121129/1-1211291121220-L.jpg" alt="暖冬美景" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>暖冬美景</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=760.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1511" title="爱的誓言" target="_blank"><img src="uploads/allimg/121125/1-1211251419230-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121125/1-1211251419230-L.jpg" alt="爱的誓言" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>爱的誓言</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=756.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1509" title="听见幸福" target="_blank"><img src="uploads/allimg/121124/1-1211241455270-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121124/1-1211241455270-L.jpg" alt="听见幸福" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>听见幸福</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=749.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1507" title="幸福时光" target="_blank"><img src="uploads/allimg/121123/1-1211231649190-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121123/1-1211231649190-L.jpg" alt="幸福时光" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>幸福时光</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=753&extra=page=1.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1506" title="秋末" target="_blank"><img src="uploads/allimg/121123/1-1211231639230-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121123/1-1211231639230-L.jpg" alt="秋末" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>秋末</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=748&extra=page=1.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1505" title="爱感恩" target="_blank"><img src="uploads/allimg/121123/1-1211231635470-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121123/1-1211231635470-L.jpg" alt="爱感恩" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>爱感恩</i></a></li>
+<li><a href="bbs/forum.php-mod=viewthread&tid=734.htm" tppabs="http://www.lymonalisa.com/plus/view.php?aid=1495" title="恒大之爱" target="_blank"><img src="uploads/allimg/121119/1-1211191120450-L.jpg" tppabs="http://www.lymonalisa.com/uploads/allimg/121119/1-1211191120450-L.jpg" alt="恒大之爱" width="144" height="200"/><span>婚纱摄影 TIME</span><img src="{dede:global.cfg_templets_skin/}/img/kr.png" tppabs="http://www.lymonalisa.com/mnls_images/kr.png" class="bpng png"/><i>恒大之爱</i></a></li>
+
+			</ul>
+		</div>
+	</div>
+        </div>
+    </div>
+
+
+
+        
+
+
+    
+    
+<div class="clear"></div>
+{dede:include filename="footer.htm"/}
+<!-- /footer -->
+</body>
+</html>

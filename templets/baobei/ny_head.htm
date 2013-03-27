@@ -1,0 +1,52 @@
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>漂亮宝贝 -南阳婚纱摄影|南阳婚纱摄影第一品牌</title>
+  <meta name="keywords" content="丽致写真" />
+  <meta name="description" content="南阳漂亮宝贝婚纱摄影()是最大的南阳婚纱影楼、最具影响力的婚纱摄影工作室。提供全方位的丽致写真介绍、展示、作品等。" />
+  <meta name="author" content="漂亮宝贝婚纱摄影官网" />
+  <meta name="robots" content="all" />
+  <link rel="shortcut icon" type="image/ico" href="../favicon.ico"  />
+  <link href="{dede:global.cfg_templets_skin/}/img/style.css"  rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/img/sexylightbox.css" type="text/css" media="all" />
+<link href="{dede:global.cfg_cmsurl/}/img/index.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/img/sexylightbox.css" type="text/css" media="all" />
+<link href="{dede:global.cfg_templets_skin/}/css/style.css"rel="stylesheet" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/style/dedecms.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="{dede:global.cfg_templets_skin/}/img/index.css" rel="stylesheet" type="text/css" />
+<script src="{dede:global.cfg_templets_skin/}/img/jquery.1.8.3.js"  type="text/javascript"></script>
+<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_templets_skin/}/img/jquery.colorbox.js" ></script>
+<link rel="stylesheet" href="{dede:global.cfg_templets_skin/}/img/jquery.colorbox.css"  type="text/css" media="all" />
+<script language="javascript" type="text/javascript">
+
+//左边栏图片切换
+function next_qihuan(){
+  var pic_div = jQuery("#left_pics div");
+  var first_pic = pic_div.first();
+  jQuery("#left_pics").append("<div>"+first_pic.html()+"</div>");
+  jQuery(first_pic).remove();
+};
+function pre_qihuan(){
+  var pic_div = jQuery("#left_pics div");
+  var last_pic = pic_div.last();
+  jQuery("#left_pics").prepend("<div>"+last_pic.html()+"</div>");
+  jQuery(last_pic).remove();
+};
+
+
+jQuery(document).ready(function(){
+    
+    $("#ajax").colorbox({contentWidth:"300px", contentHeight:"195px"});
+    //绑定图片弹出框
+    jQuery(".group4").colorbox({
+      rel: 'group4',
+      slideshow: true,
+      maxHeight: '550px',
+      maxWidth: '650px'
+    });
+})
+
+</script>
+</head>
+

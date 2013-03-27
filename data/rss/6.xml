@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0">
+<channel>
+<title>活动内容</title>
+<link>http://localhost:8000/list_6_1.html</link>
+<description>活动内容</description>
+<language>zh-cn</language>
+<generator><![CDATA[Copyright &amp;copy; 2002-2011 DEDECMS. 织梦科技 版权所有]]></generator>
+<webmaster>desdev@vip.qq.com</webmaster>
+<item>
+    <title><![CDATA[漂亮宝贝上线活动]]></title>
+    <link>http://localhost:8000/a/2013/0315/2.html</link>
+    <description><![CDATA[漂亮宝贝上线活动详情请咨询官方客服电话]]></description>
+    <pubDate>2013-03-15</pubDate>
+    <category>活动内容</category>
+    <author>admin</author>
+    <comments>admin</comments>
+</item>
+
+</channel>
+</rss>

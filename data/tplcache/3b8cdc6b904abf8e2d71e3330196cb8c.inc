@@ -1,0 +1,8 @@
+<ul>
+                <li>[field:textlink/]<span style=" float:right; margin-right:10px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+                <li>[field:textlink/]<span style=" float:right; margin-right:10px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+                <li>[field:textlink/]<span style=" float:right; margin-right:10px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+                <li>[field:textlink/]<span style=" float:right; margin-right:10px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+                <li>[field:textlink/]<span style=" float:right; margin-right:10px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+                <li>[field:textlink/]<span style=" float:right; margin-right:50px;">([field:pubdate function=MyDate('m-d',@me)/])</span></li>
+               </ul>

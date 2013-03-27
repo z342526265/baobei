@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>加盟相关_漂亮宝贝</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="/templets/baobei/style/dedecms.css" rel="stylesheet" media="screen" type="text/css" />
+</head>
+<body class="channel">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/img/index.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/templets/baobei/img/sexylightbox.css" type="text/css" media="all" />
+<link href="/templets/baobei/css/style.css"rel="stylesheet" type="text/css" />
+<link href="/templets/baobei/style/dedecms.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="/templets/baobei/img/index.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/include/dedeajax2.js"></script>
+<script language="javascript" type="text/javascript" src="/images/js/j.js" ></script>
+<script language="javascript" type="text/javascript" src="/templets/baobei/js/pic_scroll.js"></script>
+<script src="/templets/baobei/js/jquery.tools.min.js" type="text/javascript"></script>
+<script src="/templets/baobei/js/moumou.js"></script>
+<script src="/templets/baobei/js/slides.min.jquery.js" ></script>
+<script type="text/javascript" src="/templets/baobei/js/scrolltopcontrol.js" ></script>
+<script type="text/javascript" src="/templets/baobei/js/mootools-yui-compressed.js" ></script>
+<script type="text/javascript" src="/templets/baobei/js/sexylightbox.v2.3.mootools.min.js" ></script>
+<link rel="stylesheet" href="templets/default/css/sexylightbox.css"  type="text/css" media="all" />
+<script language="javascript" type="text/javascript">
+<!--
+	$(function(){
+		$("a[_for]").mouseover(function(){
+			$(this).parents().children("a[_for]").removeClass("thisclass").parents().children("dd").hide();
+			$(this).addClass("thisclass").blur();
+			$("#"+$(this).attr("_for")).show();
+		});
+		$("a[_for=uc_member]").mouseover();
+		$("a[_for=flink_1]").mouseover();
+	});
+	
+	function CheckLogin(){
+	  var taget_obj = document.getElementById('_userlogin');
+	  myajax = new DedeAjax(taget_obj,false,false,'','','');
+	  myajax.SendGet2("/member/ajax_loginsta.php");
+	  DedeXHTTP = null;
+	}
+-->
+</script>
+
+
+
+<script language="JavaScript">
+<!-- Author By Luchr
+function killErrors()
+{
+return true;
+}
+window.onerror = killErrors;
+// -->
+</script>
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+      SexyLightbox = new SexyLightBox({color:'blanco', dir: '/templets/default/sexyimages'});
+    });
+</script>
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: 'http://www.lymonalisa.com/templets/default/mnls_images/loading.gif',
+				play: 5000,
+				pause: 2500,
+				generatePagination: false,
+				animationStart: function(){
+					$('.caption').animate({
+						bottom:-35
+					},100);
+				},
+				animationComplete: function(current){
+					$('.caption').animate({
+						bottom:0
+					},200);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log(current);
+					};
+				}
+			});
+			
+			
+		});
+</script>
+
+
+<script type="text/javascript">
+var $ = function (id) {
+    return "string" == typeof id ? document.getElementById(id) : id;
+};
+
+var Class = {
+  create: function() {
+    return function() {
+      this.initialize.apply(this, arguments);
+    }
+  }
+}
+
+Object.extend = function(destination, source) {
+    for (var property in source) {
+        destination[property] = source[property];
+    }
+    return destination;
+}
+
+function addEventHandler(oTarget, sEventType, fnHandler) {
+    if (oTarget.addEventListener) {
+        oTarget.addEventListener(sEventType, fnHandler, false);
+    } else if (oTarget.attachEvent) {
+        oTarget.attachEvent("on" + sEventType, fnHandler);
+    } else {
+        oTarget["on" + sEventType] = fnHandler;
+    }
+};
+
+
+var Scroller = Class.create();
+Scroller.prototype = {
+  initialize: function(idScroller, idScrollMid, options) {
+    var oScroll = this, oScroller = $(idScroller), oScrollMid = $(idScrollMid);
+   
+    this.heightScroller = oScroller.offsetHeight;
+    this.heightList = oScrollMid.offsetHeight;
+   
+    if(this.heightList <= this.heightScroller) return;
+
+   
+    oScroller.style.overflow = "hidden";
+    oScrollMid.appendChild(oScrollMid.cloneNode(true));
+   
+    this.oScroller = oScroller;   
+    this.timer = null;
+   
+    this.SetOptions(options);
+   
+    this.side = 1;//1是上 -1是下
+    switch (this.options.Side) {
+        case "down" :
+            this.side = -1;
+            break;
+        case "up" :
+        default :
+            this.side = 1;
+    }
+   
+    addEventHandler(oScrollMid , "mouseover", function() { oScroll.Stop(); });
+    addEventHandler(oScrollMid , "mouseout", function() { oScroll.Start(); });
+   
+    if(this.options.PauseStep <= 0 || this.options.PauseHeight <= 0) this.options.PauseStep = this.options.PauseHeight = 0;
+    this.Pause = 0;
+   
+    this.Start();
+  },
+  //设置默认属性
+  SetOptions: function(options) {
+    this.options = {//默认值
+      Step:            1,//每次变化的px量
+      Time:            20,//速度(越大越慢)
+      Side:            "up",//滚动方向:"up"是上，"down"是下
+      PauseHeight:    0,//隔多高停一次
+      PauseStep:    1000//停顿时间(PauseHeight大于0该参数才有效)
+    };
+    Object.extend(this.options, options || {});
+  },
+  //滚动
+  Scroll: function() {
+    var iScroll = this.oScroller.scrollTop, iHeight = this.heightList, time = this.options.Time, oScroll = this, iStep = this.options.Step * this.side;
+   
+    if(this.side > 0){
+        if(iScroll >= (iHeight * 2 - this.heightScroller)){ iScroll -= iHeight; }
+    } else {
+        if(iScroll <= 0){ iScroll += iHeight; }
+    }
+   
+    if(this.options.PauseHeight > 0){
+        if(this.Pause >= this.options.PauseHeight){
+            time = this.options.PauseStep;
+            this.Pause = 0;
+        } else {
+            this.Pause += Math.abs(iStep);
+            this.oScroller.scrollTop = iScroll + iStep;
+        }
+    } else { this.oScroller.scrollTop = iScroll + iStep; }
+   
+    this.timer = window.setTimeout(function(){ oScroll.Scroll(); }, time);
+  },
+  //开始
+  Start: function() {
+    this.Scroll();
+  },
+  //停止
+  Stop: function() {
+    clearTimeout(this.timer);
+  }
+};
+
+window.onload = function(){
+    new Scroller("idScroller", "idScrollMid",{ PauseHeight:37 });
+}
+</script><!--新闻标题向上滚动JS结束-->
+
+
+        <script>
+            $(document).ready(function() {
+            $(".sc1 .sc2").scrollable({size:1,items:".sc1 .sc2 ul",circular:true,prev:".sk1",next:".sk2"}).autoscroll({ autoplay: true,interval:4000 });
+            });
+            </script>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="http://www.lymonalisa.com/templets/default/js/PNG.js"></script>
+    <script>
+        PNG.fix('.png');
+    </script>
+<![endif]-->
+</head>
+
+<body>
+<div class="toper">
+     <EMBED src="/swf/banner.swf" tppabs="/swf/banner.swf" width=100%  height=159 type=application/x-shockwave-flash wmode="transparent" quality="high"></EMBED>
+     <div style="clear:both"></div>
+</div>
+<div class="flasher"><embed src="/swf/beijing.swf" tppabs="/swf/beijing.swf" width=100% height=530 wmode="transparent" quality="high"></embed></div>
+<div class="menu1">
+     <ul>
+      	<li><a href='/'>网站首页</a></li>
+        
+      	<li><a href='/plus/list.php?tid=1' >关于我们</a></li>
+      	
+      	<li><a href='/a/xinshang/list_2_1.html'  rel='dropmenu2'>作品欣赏</a></li>
+      	
+      	<li><a href='/plus/list.php?tid=3' >最新动态</a></li>
+      	
+      	<li><a href='/plus/list.php?tid=4' >服务报价</a></li>
+      	<li><a href='/join.html' >加盟相关</a></li>
+      	<li><a href='/contact.html' >联系我们</a></li>
+      	
+      	<li><a href='/list_6_1.html' >活动内容</a></li>
+      	
+      	<div style="clear:both"></div>
+     </ul>
+</div>
+<!-- /header -->
+<div class="w960 center clear mt1">
+ <div class="pleft">
+  <div class="flashnews">
+   <script language='javascript'>
+linkarr = new Array();
+picarr = new Array();
+textarr = new Array();
+var swf_width=280;
+var swf_height=192;
+var files = "";
+var links = "";
+var texts = "";
+//这里设置调用标记
+
+for(i=1;i<picarr.length;i++){
+  if(files=="") files = picarr[i];
+  else files += "|"+picarr[i];
+}
+for(i=1;i<linkarr.length;i++){
+  if(links=="") links = linkarr[i];
+  else links += "|"+linkarr[i];
+}
+for(i=1;i<textarr.length;i++){
+  if(texts=="") texts = textarr[i];
+  else texts += "|"+textarr[i];
+}
+document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="'+ swf_width +'" height="'+ swf_height +'">');
+document.write('<param name="movie" value="/templets/baobei/images/bcastr3.swf"><param name="quality" value="high">');
+document.write('<param name="menu" value="false"><param name=wmode value="opaque">');
+document.write('<param name="FlashVars" value="bcastr_file='+files+'&bcastr_link='+links+'&bcastr_title='+texts+'">');
+document.write('<embed src="/templets/baobei/images/bcastr3.swf" wmode="opaque" FlashVars="bcastr_file='+files+'&bcastr_link='+links+'&bcastr_title='+texts+'& menu="false" quality="high" width="'+ swf_width +'" height="'+ swf_height +'" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />'); document.write('</object>');
+</script>
+  </div>
+  <!-- /flashnews -->
+  <div class="topcommand">
+   <dl class="tbox">
+    <dt><strong>频道头条</strong></dt>
+    <dd>
+     <div class="onenews">  </div>
+     <!-- /onenews -->
+     <ul class="c2 ico1">
+      
+     </ul>
+    </dd>
+   </dl>
+  </div>
+  <!-- /topcommand -->
+  <div class="picnews mt1">
+   <dl class="tbox">
+    <dt><strong>图文资讯</strong></dt>
+    <dd>
+     <ul class="e1">
+      
+     </ul>
+    </dd>
+   </dl>
+  </div>
+  <!-- /picnews -->
+  <div id="leftAD1" style="margin:10px auto"><img src="/ad1.jpg" /></div>
+  <div class="listbox">  </div>
+  <!-- /listbox -->
+ </div>
+ <!-- /pleft -->
+ <div class="pright">
+  <div class="commend">
+   <dl class="tbox light">
+    <dt class='light'><strong>推荐内容</strong></dt>
+    <dd class='light'>
+     <ul class="d4">
+      
+     </ul>
+    </dd>
+   </dl>
+  </div>
+  <!-- /commend -->
+  <div id="conrightAD" style="margin:10px auto"><script type="text/javascript" src="http://ad.dedecms.com/adsview/?action=single&key=listrtpicad&charset=gbk"></script></div>
+  <div class="hot mt1">
+   <dl class="tbox light">
+    <dt class='light'><strong>热点内容</strong></dt>
+    <dd class='light'>
+     <ul class="c1 ico2">
+      
+     </ul>
+    </dd>
+   </dl>
+  </div>
+  <div id="listRtPicAD2" style="margin:10px auto"><script type="text/javascript" src="http://ad.dedecms.com/adsview/?action=single&key=listrtpicad2&charset=gbk"></script></div>
+ </div>
+ <!-- /pright -->
+</div>
+<div id="footAD" style="margin:10px auto; width:726px"><script type="text/javascript" src="http://ad.dedecms.com/adsview/?action=single&key=innerfooterad&charset=gbk"></script></div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/img/index.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<!-- //底部模板 -->
+<div id="w944">
+        <div id="links">
+          <h2> <span>友情链接</span></h2>
+            <ul>
+
+<li>            	<li>南阳婚纱摄影</li>
+<a href="javascript:if(confirm('http://wpa.qq.com/msgrd?v=1&uin=952604720&site=lymonalisa%BD  \n\nļδ Teleport Pro ȡأΪ ·ʼַõķΧ  \n\nҪӷϴ'))window.location='http://wpa.qq.com/msgrd?v=1&uin=952604720&site=lymonalisa%BD'" tppabs="http://wpa.qq.com/msgrd?v=1&uin=952604720&site=lymonalisa%BD" target="_blank" rel="nofollow">点击申请</a>
+</li>   
+         </ul>
+
+        </div>
+    </div>
+<div class="links_xb1"></div>
+    	﻿<div id="foot">
+    	<div class="foot">
+        	<a href="index.htm" ><img src="img/foot_logo.gif" /></a>
+   	    <p><a href="index.htm" >洛阳婚纱摄影</a> | <a href="about_us.html" >关于我们</a> | <a href="zuopinzhanshi/index.htm" >婚纱照作品</a> | <a href="yingloubaojia/index.htm" >影楼报价</a> | <a href="javascript:if(confirm('http://www.lymonalisa.com/difennilifu/  \n\nļδ Teleport Pro ȡأΪ δҵļ  \n\nҪӷϴ'))window.location='http://www.lymonalisa.com/difennilifu/'" >蒂芬妮礼服</a> | <a href="news/index.htm" >新闻动态</a> | <a href="contact_us.html" >联系我们</a> | <a href="bbs/forum.php.htm"  target="_blank">洛阳论坛</a> <br>
+        	  版权所有 © 2007-2012 洛阳蒙娜丽莎摄影设计有限公司 <a href="#" target="_blank">Map</a> | 
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F737dc4ad145068bc071613eaa7139cc9' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+   	        <br>
+   	      热门推荐：洛阳婚纱摄影、婚纱影楼、洛阳婚纱照、婚纱摄影工作室，首选蒙娜丽莎！</p>
+  </div>
+</div>
+﻿<script type='text/javascript' src="../www11.53kf.com/kf.php-arg=lypcsm&style=1" tppabs="http://chat.53kf.com/kf.php?arg=lypcsm&style=1"></script>
+<div style="display:none"><script src="../s25.cnzz.com/stat.php-id=4033298&web_id=4033298" tppabs="http://s25.cnzz.com/stat.php?id=4033298&web_id=4033298" language="JavaScript"></script></div>
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&img=7&uid=526075" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript"> 
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<script  type="text/javascript"> 
+  var _sogou_sa_q = _sogou_sa_q || [];
+  _sogou_sa_q.push(['_sid', '14478-15016']);
+ (function() {
+    var _sogou_sa_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    var _sogou_sa_src=_sogou_sa_protocol+"hermes.sogou.com/sa.js%3Fsid%3D14478-15016";
+    document.write(unescape("%3Cscript src='" + _sogou_sa_src + "' type='text/javascript'%3E%3C/script%3E"));
+    })();
+</script>
+<!-- Baidu Button END -->
+  </body>
+  </html>
+
+<!-- /footer -->
+</body>
+</html>

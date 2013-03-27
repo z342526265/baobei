@@ -1,0 +1,21 @@
+
+div#custom_popup{
+        width:700px;
+        height: 300px;
+        margin: 15px;
+        padding: 5px;
+
+        display: none;
+        border: solid 2px green;
+
+        position:absolute;
+        z-index: 1;
+        left:250px;
+        top:120px;
+        background-color:#CCFF88;
+        overflow: auto;
+    }
+    a#close_popup{
+        position:relative;
+        left:337px;
+    }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0">
+<channel>
+<title>最新动态</title>
+<link>http://localhost:8000/list_3_1.html</link>
+<description>最新动态</description>
+<language>zh-cn</language>
+<generator><![CDATA[Copyright &amp;copy; 2002-2011 DEDECMS. 织梦科技 版权所有]]></generator>
+<webmaster>desdev@vip.qq.com</webmaster>
+<item>
+    <title><![CDATA[漂亮宝贝上线]]></title>
+    <link>http://localhost:8000/a/2013/0314/1.html</link>
+    <description><![CDATA[漂亮宝贝上线了、欢迎新老客户前来参观。]]></description>
+    <pubDate>2013-03-14</pubDate>
+    <category>最新动态</category>
+    <author>admin</author>
+    <comments>admin</comments>
+</item>
+
+</channel>
+</rss>

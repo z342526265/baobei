@@ -1,0 +1,22 @@
+
+div#custom_popup{
+  width:700px;
+  height: 300px;
+  margin: 15px;
+  padding: 5px;
+
+  display: none;
+  border: solid 2px green;
+
+  position:absolute;
+
+  overflow: auto;
+  background: none repeat scroll 0 0 transparent;
+  position: absolute;
+  width: 434px;
+  z-index: 32002;
+}
+a#close_popup{
+  position:relative;
+  left:337px;
+}
